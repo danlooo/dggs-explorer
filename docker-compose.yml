@@ -1,0 +1,36 @@
+services:
+  gateway:
+    image: traefik:v2.5
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  api:
+    image: dggs_explorer_api
+    build: api
+    ports:
+      - "9006:80"
+  viz:
+    image: dggs_explorer_viz
+    container_name: viz
+    build: viz
+    ports:
+      - "9007:80"
+    environment:
+      DGGS_PROXY_URL: "http://localhost/viz"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.viz.rule=Host(`localhost`) && PathPrefix(`/viz`)"
+      - "traefik.http.routers.viz.middlewares=viz-stripprefix"
+      - "traefik.http.middlewares.viz-stripprefix.stripprefix.forceslash=true"
+      - "traefik.http.middlewares.viz-stripprefix.stripprefix.prefixes=/viz"
+      - "traefik.http.services.viz.loadbalancer.server.port=80"
