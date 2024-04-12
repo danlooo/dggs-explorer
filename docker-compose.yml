@@ -14,9 +14,12 @@ services:
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
   api:
     image: dggs_explorer_api
     build: api
+    ports:
+      - "9006:80"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/dggs-api`)"
@@ -24,21 +27,20 @@ services:
       - "traefik.http.middlewares.api-stripprefix.stripprefix.forceslash=true"
       - "traefik.http.middlewares.api-stripprefix.stripprefix.prefixes=/dggs-api"
       - "traefik.http.services.api.loadbalancer.server.port=80"
+
   gui:
     image: dggs_explorer_gui
     build: gui
-    ports:
-      - "9005:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.gui.rule=Host(`localhost`) && PathPrefix(`/gui`)"
+      - "traefik.http.routers.gui.rule=Host(`localhost`)"
       - "traefik.http.routers.gui.middlewares=gui-stripprefix"
       - "traefik.http.middlewares.gui-stripprefix.stripprefix.forceslash=true"
       - "traefik.http.middlewares.gui-stripprefix.stripprefix.prefixes=/gui"
       - "traefik.http.services.gui.loadbalancer.server.port=80"
-      - "traefik.http.services.gui.loadbalancer.sticky.cookie=true"
-      - "traefik.http.services.gui.loadbalancer.sticky.cookie.name=stickysvr"
-      - "traefik.http.routers.gui.entrypoints=web"
+      # redirect localhost to localhost/gui
+      - "traefik.http.middlewares.test-redirectregex.redirectregex.regex=^[http://]?localhost[/]?"
+      - "traefik.http.middlewares.test-redirectregex.redirectregex.replacement=http://localhost/gui/"
 
   viz:
     image: dggs_explorer_viz

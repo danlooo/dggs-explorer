@@ -7,8 +7,8 @@ DGGSexplorer is a web server for Discrete Global Grid Systems based on [DGGS.jl]
 Deploy the web server using Docker:
 
 ```bash
-
 git clone https://github.com/danlooo/dggs-explorer .
 cd dggs-explorer
-docker compose up --build
+docker compose up
 ```
+Now it is accessible at [http://localhost](http://localhost)
