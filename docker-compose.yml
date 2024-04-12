@@ -31,6 +31,8 @@ services:
   gui:
     image: dggs_explorer_gui
     build: gui
+    depends_on:
+      - viz
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gui.rule=Host(`localhost`)"
@@ -44,8 +46,9 @@ services:
 
   viz:
     image: dggs_explorer_viz
-    container_name: viz
     build: viz
+    volumes:
+      - dggs_data_cubes:/data:ro
     environment:
       DGGS_PROXY_URL: "http://localhost/viz"
     labels:
@@ -55,3 +58,6 @@ services:
       - "traefik.http.middlewares.viz-stripprefix.stripprefix.forceslash=true"
       - "traefik.http.middlewares.viz-stripprefix.stripprefix.prefixes=/viz"
       - "traefik.http.services.viz.loadbalancer.server.port=80"
+
+volumes:
+  dggs_data_cubes:
