@@ -1,23 +1,18 @@
-# Define server logic required to draw a histogram ----
 server <- function(input, output) {
+  output$viz <- renderUI({
+    url <- paste0("http://viz.localhost?path=", URLencode(input$url, reserved = TRUE))
+    tags$iframe(src = url, style = "width:100%;height:100%")
+  })
 
-  # Histogram of the Old Faithful Geyser Data ----
-  # with requested number of bins
-  # This expression that generates a histogram is wrapped in a call
-  # to renderPlot to indicate that:
-  #
-  # 1. It is "reactive" and therefore should be automatically
-  #    re-executed when inputs (input$bins) change
-  # 2. Its output type is a plot
-  output$distPlot <- renderPlot({
+  output$api <- renderUI({
+    url <- paste0("http://api.localhost/docs")
+    tags$iframe(src = url, style = "width:100%;height:100%")
+  })
 
-    x    <- faithful$waiting
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-    hist(x, breaks = bins, col = "#007bc2", border = "white",
-         xlab = "Waiting time to next eruption (in mins)",
-         main = "Histogram of waiting times")
-
-    })
-
+  output$metadata <- renderText({
+    input$url |>
+      paste0("/.zattrs") |>
+      read_json() |>
+      as.yaml()
+  })
 }

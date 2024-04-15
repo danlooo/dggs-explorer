@@ -1,4 +1,8 @@
-FROM rocker/shiny:latest
+FROM rocker/shiny-verse:4.3.3
+
+WORKDIR /work
+COPY install.R install.R
+RUN Rscript install.R
 
 COPY ui.R /srv/shiny-server/
 COPY server.R /srv/shiny-server/

@@ -1,21 +1,23 @@
+library(tidyverse)
 library(shiny)
 library(bslib)
+library(jsonlite)
+library(yaml)
 
-# Define UI for app that draws a histogram ----
-ui <- page_sidebar(
-  # App title ----
-  title = "Hello Shiny!",
-  # Sidebar panel for inputs ----
-  sidebar = sidebar(
-    # Input: Slider for the number of bins ----
-    sliderInput(
-      inputId = "bins",
-      label = "Number of bins:",
-      min = 1,
-      max = 50,
-      value = 30
-    )
+ui <- page_navbar(
+  title = "DGGSexplorer",
+  theme = bs_theme(bootswatch = "cyborg", bg = "black", fg = "white"),
+  nav_panel(
+    "Home",
+    textInput("url", "DGGS Data Cube Path", value = "https://s3.bgc-jena.mpg.de:9000/dggs/modis", width = "100vw"),
+    verbatimTextOutput("metadata")
   ),
-  # Output: Histogram ----
-  plotOutput(outputId = "distPlot")
+  nav_panel(
+    "Map",
+    htmlOutput(outputId = "viz", style = "width:100vw;height:100vw")
+  ),
+  nav_panel(
+    "API",
+    htmlOutput(outputId = "api", style = "width:100vw;height:100vw")
+  )
 )
