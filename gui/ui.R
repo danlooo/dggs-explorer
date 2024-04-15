@@ -7,16 +7,7 @@ library(jsonview)
 
 ui <- page_navbar(
   title = "DGGSexplorer",
-  theme = shinytheme("cyborg"),
-  tags$head(
-    tags$style(
-      HTML("
-      .form-control {
-        background-color: transparent
-      }
-      ")
-    )
-  ),
+  theme = bs_theme(bootswatch = "cyborg", bg = "black", fg = "white"),
   nav_panel(
     "Home",
     textInput("url", "DGGS Data Cube Path", value = "https://s3.bgc-jena.mpg.de:9000/dggs/modis", width = "100vw"),
@@ -26,5 +17,8 @@ ui <- page_navbar(
     "Map",
     htmlOutput(outputId = "viz", style = "width:100vw;height:100vw")
   ),
-  nav_item(a(href = "dggs-api", "API"))
+  nav_panel(
+    "API",
+    htmlOutput(outputId = "api", style = "width:100vw;height:100vw")
+  )
 )

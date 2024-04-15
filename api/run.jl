@@ -6,4 +6,4 @@ using SwaggerMarkdown
     return "hello world!"
 end
 
-serve(; port=80)
+serve(; host="0.0.0.0", port=80)
