@@ -1,2 +1,1 @@
-install.packages(c("shinythemes", "jsonlite", "devtools"))
-devtools::install_github("hrbrmstr/jsonview")
+install.packages(c("jsonlite", "devtools", "yaml"))

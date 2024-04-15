@@ -1,9 +1,8 @@
 library(tidyverse)
 library(shiny)
 library(bslib)
-library(shinythemes)
 library(jsonlite)
-library(jsonview)
+library(yaml)
 
 ui <- page_navbar(
   title = "DGGSexplorer",
@@ -11,7 +10,7 @@ ui <- page_navbar(
   nav_panel(
     "Home",
     textInput("url", "DGGS Data Cube Path", value = "https://s3.bgc-jena.mpg.de:9000/dggs/modis", width = "100vw"),
-    uiOutput("metadata", style = "height:100vh")
+    verbatimTextOutput("metadata")
   ),
   nav_panel(
     "Map",

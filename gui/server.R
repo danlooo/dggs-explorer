@@ -9,10 +9,10 @@ server <- function(input, output) {
     tags$iframe(src = url, style = "width:100%;height:100%")
   })
 
-  output$metadata <- renderUI({
+  output$metadata <- renderText({
     input$url |>
       paste0("/.zattrs") |>
       read_json() |>
-      json_view()
+      as.yaml()
   })
 }
