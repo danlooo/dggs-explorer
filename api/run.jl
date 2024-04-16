@@ -7,6 +7,15 @@ using WGLMakie
 using ColorSchemes
 using FileIO
 
+@get "/cell/{lon}/{lat}/{level}" function (req::HTTP.Request, lon::Float64, lat::Float64, level::Int)
+    return DGGS._transform_points(lon, lat, level)[1, 1]
+end
+
+@get "/coordinate/{q2di_n}/{q2di_i}/{q2di_j}/{level}" function (req::HTTP.Request, q2di_n::Float64, q2di_i::Float64, q2di_j::Int, level::Int)
+    coord = DGGS.transform_points([Q2DI(q2di_n, q2di_i, q2di_j)], level)[1]
+    return Dict(:lat => coord[2], :lon => coord[1])
+end
+
 @get "/collections/{path}/{level}/map" function (req::HTTP.Request, path::String, level::Int)
     cell_cube = GridSystem(unescapeuri(path))[level]
 
