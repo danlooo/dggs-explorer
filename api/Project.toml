@@ -1,4 +1,10 @@
 [deps]
+ColorSchemes = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
+DGGS = "1b1208a4-f9dd-4606-8704-9f68bba98fd1"
+FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
 Oxygen = "df9a0d86-3283-4920-82dc-4555fc0d1d8b"
 SwaggerMarkdown = "1b6eb727-ad4b-44eb-9669-b9596a6e760f"
+URIs = "5c2747f8-b7ea-4ff2-ba2e-563bfd36b1d4"
+WGLMakie = "276b4fcb-3e11-5398-bf8b-a0c2d153d008"

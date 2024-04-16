@@ -32,9 +32,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.gui.rule=Host(`localhost`)"
       - "traefik.http.services.gui.loadbalancer.server.port=80"
-      # redirect localhost to localhost/gui
-      - "traefik.http.middlewares.test-redirectregex.redirectregex.regex=^[http://]?localhost[/]?"
-      - "traefik.http.middlewares.test-redirectregex.redirectregex.replacement=http://gui.localhost"
 
   viz:
     image: dggs_explorer_viz
