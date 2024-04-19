@@ -6,6 +6,13 @@ using HTTP
 using URIs
 using Serialization
 
+# Pre-calculate Cell id raster
+level = 10
+resolution = 1024
+longitudes = range(-180, 180, length=resolution * 2)
+latitudes = range(-90, 90, length=resolution)
+cell_ids_mat = transform_points(longitudes, latitudes, level)
+
 WGLMakie.activate!(; resize_to=:body)
 
 # run on every request
@@ -14,7 +21,7 @@ app = App() do request::HTTP.Request
     query_params = request.target |> URI |> queryparams
 
     dggs = query_params["path"] |> GridSystem
-    plt = plot(dggs)
+    plt = plot(Val(:geo), dggs[level], cell_ids_mat, longitudes, latitudes)
 
     DOM.div(plt, style=Styles(
         CSS("body", "margin" => "0", "padding" => "0")
