@@ -6,12 +6,12 @@ using HTTP
 using URIs
 using Serialization
 
-# Pre-calculate Cell id raster
-level = 10
-resolution = 1024
-longitudes = range(-180, 180, length=resolution * 2)
-latitudes = range(-90, 90, length=resolution)
-cell_ids_mat = transform_points(longitudes, latitudes, level)
+cache = deserialize("cache.jl.dat")
+level = cache[:level]
+resolution = cache[:resolution]
+longitudes = cache[:longitudes]
+latitudes = cache[:latitudes]
+cell_ids_mat = cache[:cell_ids_mat]
 
 WGLMakie.activate!(; resize_to=:body)
 
