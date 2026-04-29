@@ -2,6 +2,10 @@
 
 DGGSexplorer is a web server for Discrete Global Grid Systems based on [DGGS.jl](https://github.com/danlooo/DGGS.jl) and [DGGRID](https://github.com/sahrk/DGGRID).
 
+## Deployment
+
+The web server can be accesed at https://dggs.danlooo.de
+
 ## Get Started
 
 Deploy the web server using Docker:
