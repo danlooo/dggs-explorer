@@ -11,7 +11,7 @@ The web server can be accesed at https://dggs.danlooo.de
 Deploy the web server using Docker:
 
 ```bash
-git clone https://github.com/danlooo/dggs-explorer .
+git clone https://github.com/danlooo/dggs-explorer
 cd dggs-explorer
 docker compose up
 ```
